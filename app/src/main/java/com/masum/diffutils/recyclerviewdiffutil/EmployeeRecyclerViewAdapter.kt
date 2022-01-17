@@ -1,61 +1,56 @@
-package com.masum.diffutils.recyclerviewdiffutil;
+package com.masum.diffutils.recyclerviewdiffutil
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.RecyclerView;
-import java.util.ArrayList;
-import java.util.List;
+import com.masum.diffutils.recyclerviewdiffutil.Employee
+import androidx.recyclerview.widget.RecyclerView
+import android.view.ViewGroup
+import android.view.LayoutInflater
+import android.view.View
+import com.masum.diffutils.recyclerviewdiffutil.R
+import com.masum.diffutils.recyclerviewdiffutil.EmployeeDiffCallback
+import androidx.recyclerview.widget.DiffUtil.DiffResult
+import androidx.recyclerview.widget.DiffUtil
+import android.widget.TextView
+import java.util.ArrayList
 
-public class EmployeeRecyclerViewAdapter extends
-                                         RecyclerView.Adapter<EmployeeRecyclerViewAdapter
-                                                 .ViewHolder> {
+class EmployeeRecyclerViewAdapter(employeeList: List<Employee>?) :
+    RecyclerView.Adapter<EmployeeRecyclerViewAdapter.ViewHolder>() {
+    private val mEmployees: MutableList<Employee> = ArrayList()
 
-    private List<Employee> mEmployees = new ArrayList<>();
-
-    public EmployeeRecyclerViewAdapter(List<Employee> employeeList) {
-        this.mEmployees.addAll(employeeList);
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val view = inflater.inflate(R.layout.list_item, parent, false)
+        return ViewHolder(view)
     }
 
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final View view = inflater.inflate(R.layout.list_item, parent, false);
-        return new ViewHolder(view);
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val employee = mEmployees[position]
+        holder.name.text = employee.getName()
+        holder.role.text = employee.getRole()
     }
 
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        final Employee employee = mEmployees.get(position);
-        holder.name.setText(employee.getName());
-        holder.role.setText(employee.getRole());
+    fun updateEmployeeListItems(employees: List<Employee>?) {
+        val diffCallback = EmployeeDiffCallback(mEmployees, employees)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        mEmployees.clear()
+        mEmployees.addAll(employees!!)
+        diffResult.dispatchUpdatesTo(this)
     }
 
-    public void updateEmployeeListItems(List<Employee> employees) {
-        final EmployeeDiffCallback diffCallback = new EmployeeDiffCallback(this.mEmployees, employees);
-        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
-
-        this.mEmployees.clear();
-        this.mEmployees.addAll(employees);
-        diffResult.dispatchUpdatesTo(this);
+    override fun getItemCount(): Int {
+        return mEmployees.size
     }
 
-    @Override
-    public int getItemCount() {
-        return mEmployees.size();
-    }
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val role: TextView
+        val name: TextView
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        private final TextView role;
-        private final TextView name;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            name = (TextView) itemView.findViewById(R.id.employee_name);
-            role = (TextView) itemView.findViewById(R.id.employee_role);
+        init {
+            name = itemView.findViewById<View>(R.id.employee_name) as TextView
+            role = itemView.findViewById<View>(R.id.employee_role) as TextView
         }
+    }
+
+    init {
+        mEmployees.addAll(employeeList!!)
     }
 }
