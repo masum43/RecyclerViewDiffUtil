@@ -1,6 +1,6 @@
-package com.appybuilder.mdbillalhossain1.recyclerviewdiffutil.utils
+package com.masum.diffutils.recyclerviewdiffutil.utils
 
-import com.appybuilder.mdbillalhossain1.recyclerviewdiffutil.Employee
+import com.masum.diffutils.recyclerviewdiffutil.Employee
 import java.util.*
 
 object DummyEmployeeDataUtils {

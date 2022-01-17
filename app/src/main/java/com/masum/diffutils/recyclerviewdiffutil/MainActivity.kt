@@ -1,13 +1,12 @@
-package com.appybuilder.mdbillalhossain1.recyclerviewdiffutil
+package com.masum.diffutils.recyclerviewdiffutil
 
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.appybuilder.mdbillalhossain1.recyclerviewdiffutil.databinding.ActivityMainBinding
-import com.appybuilder.mdbillalhossain1.recyclerviewdiffutil.utils.DummyEmployeeDataUtils
+import com.masum.diffutils.recyclerviewdiffutil.utils.DummyEmployeeDataUtils
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

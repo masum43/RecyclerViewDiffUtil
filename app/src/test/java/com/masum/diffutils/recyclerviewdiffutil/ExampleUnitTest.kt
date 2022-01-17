@@ -1,4 +1,4 @@
-package com.appybuilder.mdbillalhossain1.recyclerviewdiffutil
+package com.masum.diffutils.recyclerviewdiffutil
 
 import org.junit.Test
 
